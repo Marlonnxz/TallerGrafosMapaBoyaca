@@ -21,7 +21,6 @@ public class BoyacaGraph {
     }
 
     private void addCities() {
-        // Añadir ciudades principales
         addCity(new City("Tunja", 400, 100));
         addCity(new City("Duitama", 700, 200));
         addCity(new City("Sogamoso", 750, 400));
@@ -31,8 +30,6 @@ public class BoyacaGraph {
         addCity(new City("Samacá", 250, 150));
         addCity(new City("Lago de Tota", 800, 500));
         addCity(new City("Monguí", 780, 550));
-
-
         addCity(new City("Cómbita", 475, 150));
         addCity(new City("Sáchica", 200, 180));
         addCity(new City("Saboyá", 100, 300));

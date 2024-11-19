@@ -11,10 +11,34 @@ import java.util.List;
 public class GraphPanel extends JPanel {
     private Graph<City, DefaultWeightedEdge> graph;
     private List<DefaultWeightedEdge> highlightedPath;
+    private int offsetX = 0;
+    private int offsetY = 0;
+    private int width = 0;
+    private int height = 0;
 
     public GraphPanel(Graph<City, DefaultWeightedEdge> graph) {
         this.graph = graph;
         this.highlightedPath = null;
+        calculateMapDimensions();
+    }
+
+    private void calculateMapDimensions() {
+        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
+
+        for (City city : graph.vertexSet()) {
+            int x = city.getX();
+            int y = city.getY();
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+        }
+
+        width = maxX - minX;
+        height = maxY - minY;
+        offsetX = (getWidth() - width) / 2;
+        offsetY = (getHeight() - height) / 2;
     }
 
     public void setHighlightedPath(List<DefaultWeightedEdge> path) {
@@ -28,14 +52,14 @@ public class GraphPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        calculateMapDimensions();
 
         for (DefaultWeightedEdge edge : graph.edgeSet()) {
             City city1 = graph.getEdgeSource(edge);
             City city2 = graph.getEdgeTarget(edge);
 
-            Point p1 = new Point(city1.getX(), city1.getY());
-            Point p2 = new Point(city2.getX(), city2.getY());
-
+            Point p1 = new Point(city1.getX() + offsetX, city1.getY() + offsetY);
+            Point p2 = new Point(city2.getX() + offsetX, city2.getY() + offsetY);
 
             if (highlightedPath != null && highlightedPath.contains(edge)) {
                 g2.setColor(Color.RED);
@@ -57,13 +81,13 @@ public class GraphPanel extends JPanel {
 
         int cityRadius = 15;
         for (City city : graph.vertexSet()) {
-            Point point = new Point(city.getX(), city.getY());
+            Point point = new Point(city.getX() + offsetX, city.getY() + offsetY);
 
             g2.setColor(Color.BLUE);
             g2.fillOval(point.x - cityRadius / 2, point.y - cityRadius / 2, cityRadius, cityRadius);
 
             g2.setColor(Color.BLACK);
-            g2.drawString(city.getName(), point.x - cityRadius / 2, point.y - cityRadius / 2 - 5); // Alineación ajustada
+            g2.drawString(city.getName(), point.x - cityRadius / 2, point.y - cityRadius / 2 - 5);
         }
     }
 }
