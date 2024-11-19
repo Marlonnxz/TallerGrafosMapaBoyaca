@@ -1,26 +1,32 @@
 package co.edu.uptc.Presentation;
 
-
-import javax.swing.*;
-import java.awt.*;
 import co.edu.uptc.Logic.BoyacaGraph;
 import co.edu.uptc.Model.City;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
+/**
+ * Clase principal que implementa una interfaz gráfica interactiva para visualizar y calcular
+ * rutas más cortas entre ciudades del departamento de Boyacá, Colombia.
+ */
 public class BoyacaMapRunner extends JFrame {
     private BoyacaGraph boyacaGraph;
     private GraphPanel graphPanel;
     private JComboBox<String> startCityComboBox, endCityComboBox, transportComboBox;
 
+    /**
+     * Constructor que inicializa la ventana principal con los elementos gráficos y funcionales.
+     */
     public BoyacaMapRunner() {
         boyacaGraph = new BoyacaGraph();
         setTitle("Mapa Interactivo - Boyacá");
 
         graphPanel = new GraphPanel(boyacaGraph.getGraph());
-
         graphPanel.setPreferredSize(new Dimension(1000, 900));
 
         setSize(graphPanel.getPreferredSize());
@@ -37,7 +43,6 @@ public class BoyacaMapRunner extends JFrame {
         startCityComboBox = new JComboBox<>(boyacaGraph.getCityMap().keySet().toArray(new String[0]));
         endCityComboBox = new JComboBox<>(boyacaGraph.getCityMap().keySet().toArray(new String[0]));
         transportComboBox = new JComboBox<>(new String[]{"Bicicleta", "Automóvil", "Moto", "A Pie"});
-
 
         JButton calculateButton = new JButton("Calcular Ruta");
         calculateButton.setPreferredSize(new Dimension(200, 50));
@@ -61,6 +66,10 @@ public class BoyacaMapRunner extends JFrame {
         add(controlPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Calcula la ruta más corta entre dos ciudades seleccionadas, mostrando el tiempo estimado
+     * y la ruta en un mensaje emergente.
+     */
     private void calculateShortestPath() {
         String startCityName = (String) startCityComboBox.getSelectedItem();
         String endCityName = (String) endCityComboBox.getSelectedItem();
@@ -105,6 +114,13 @@ public class BoyacaMapRunner extends JFrame {
         }
     }
 
+    /**
+     * Obtiene la velocidad promedio según el modo de transporte seleccionado.
+     *
+     * @param transportMode Modo de transporte seleccionado.
+     * @return Velocidad promedio en kilómetros por hora.
+     * @throws IllegalArgumentException Si el modo de transporte no es válido.
+     */
     private double getSpeed(String transportMode) {
         switch (transportMode) {
             case "Bicicleta":
@@ -120,6 +136,9 @@ public class BoyacaMapRunner extends JFrame {
         }
     }
 
+    /**
+     * Configura el estilo visual de la interfaz utilizando el Look and Feel Nimbus.
+     */
     private void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -127,6 +146,11 @@ public class BoyacaMapRunner extends JFrame {
         }
     }
 
+    /**
+     * Método principal que lanza la aplicación Swing.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados).
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             BoyacaMapRunner app = new BoyacaMapRunner();

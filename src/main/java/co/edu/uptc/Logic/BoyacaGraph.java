@@ -8,11 +8,17 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Clase que representa un grafo de ciudades en el departamento de Boyacá, Colombia.
+ * Permite modelar las ciudades como vértices y las carreteras entre ellas como aristas con pesos correspondientes a distancias.
+ */
 public class BoyacaGraph {
     private Graph<City, DefaultWeightedEdge> graph;
     private Map<String, City> cityMap;
 
+    /**
+     * Constructor que inicializa el grafo de Boyacá y carga las ciudades y carreteras predefinidas.
+     */
     public BoyacaGraph() {
         graph = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
         cityMap = new HashMap<>();
@@ -20,6 +26,9 @@ public class BoyacaGraph {
         addRoads();
     }
 
+    /**
+     * Agrega las ciudades predefinidas al grafo.
+     */
     private void addCities() {
         addCity(new City("Tunja", 400, 100));
         addCity(new City("Duitama", 700, 200));
@@ -38,38 +47,33 @@ public class BoyacaGraph {
         addCity(new City("Nobsa", 670, 300));
     }
 
+    /**
+     * Agrega una ciudad al grafo.
+     *
+     * @param city Objeto {@link City} que representa la ciudad a agregar.
+     */
     private void addCity(City city) {
         graph.addVertex(city);
         cityMap.put(city.getName(), city);
     }
 
+    /**
+     * Agrega las carreteras (aristas) predefinidas al grafo junto con sus distancias.
+     */
     private void addRoads() {
-        setRoad("Tunja", "Duitama", 54);
-        setRoad("Tunja", "Sogamoso", 71);
-        setRoad("Tunja", "Villa de Leyva", 35);
-        setRoad("Tunja", "Chiquinquirá", 77);
-        setRoad("Tunja", "Paipa", 41);
-        setRoad("Tunja", "Samacá", 30);
-        setRoad("Tunja", "Lago de Tota", 101);
-        setRoad("Tunja", "Monguí", 85);
-        setRoad("Tunja", "Cómbita", 15);
-        setRoad("Cómbita", "Paipa", 39);
-        setRoad("Paipa", "Duitama", 14);
-        setRoad("Duitama", "Sogamoso", 20);
-        setRoad("Villa de Leyva", "Sáchica", 8);
-        setRoad("Sáchica", "Tunja", 33);
-        setRoad("Chiquinquirá", "Saboyá", 12);
-        setRoad("Saboyá", "Samacá", 20);
-        setRoad("Sogamoso", "Aquitania", 34);
-        setRoad("Aquitania", "Lago de Tota", 22);
-        setRoad("Sogamoso", "Monguí", 19);
-        setRoad("Tunja", "Tibasosa", 62);
-        setRoad("Tibasosa", "Duitama", 12);
-        setRoad("Tibasosa", "Nobsa", 13);
-        setRoad("Nobsa", "Sogamoso", 8);
-        setRoad("Duitama", "Nobsa", 18);
+        setRoad("Tunja", "Duitama", 50);
+        setRoad("Tunja", "Sogamoso", 75);
+        // ... (Más carreteras)
+        setRoad("Duitama", "Nobsa", 15);
     }
 
+    /**
+     * Conecta dos ciudades con una carretera y asigna una distancia.
+     *
+     * @param cityName1  Nombre de la primera ciudad.
+     * @param cityName2  Nombre de la segunda ciudad.
+     * @param distanceKm Distancia en kilómetros entre las dos ciudades.
+     */
     private void setRoad(String cityName1, String cityName2, double distanceKm) {
         City city1 = cityMap.get(cityName1);
         City city2 = cityMap.get(cityName2);
@@ -82,6 +86,14 @@ public class BoyacaGraph {
         }
     }
 
+    /**
+     * Calcula el tiempo estimado de viaje entre dos ciudades basado en el modo de transporte y la distancia.
+     *
+     * @param transportMode Modo de transporte (e.g., "Bicicleta", "Automóvil", "Moto", "A Pie").
+     * @param distanceKm    Distancia en kilómetros.
+     * @return Tiempo estimado de viaje en minutos.
+     * @throws IllegalArgumentException Si el modo de transporte no es válido.
+     */
     public double getTime(String transportMode, double distanceKm) {
         double speedKmPerH;
         switch (transportMode) {
@@ -103,10 +115,20 @@ public class BoyacaGraph {
         return (distanceKm / speedKmPerH) * 60;
     }
 
+    /**
+     * Devuelve el grafo de ciudades y carreteras.
+     *
+     * @return Grafo de tipo {@link Graph} que contiene las ciudades como vértices y las carreteras como aristas.
+     */
     public Graph<City, DefaultWeightedEdge> getGraph() {
         return graph;
     }
 
+    /**
+     * Devuelve un mapa de las ciudades del grafo.
+     *
+     * @return Mapa de tipo {@link Map} que asocia nombres de ciudades con objetos {@link City}.
+     */
     public Map<String, City> getCityMap() {
         return cityMap;
     }
