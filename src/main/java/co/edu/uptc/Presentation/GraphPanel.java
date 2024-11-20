@@ -9,11 +9,6 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.List;
 
-/**
- * Panel personalizado para representar gráficamente un grafo de ciudades y rutas.
- * Permite visualizar los vértices (ciudades) y las aristas (rutas) con opciones para resaltar
- * caminos específicos.
- */
 public class GraphPanel extends JPanel {
     private Graph<City, DefaultWeightedEdge> graph;
     private List<DefaultWeightedEdge> highlightedPath;
@@ -22,20 +17,12 @@ public class GraphPanel extends JPanel {
     private int width = 0;
     private int height = 0;
 
-    /**
-     * Constructor para inicializar el panel con un grafo de ciudades.
-     *
-     * @param graph Grafo de ciudades y rutas a representar.
-     */
     public GraphPanel(Graph<City, DefaultWeightedEdge> graph) {
         this.graph = graph;
         this.highlightedPath = null;
         calculateMapDimensions();
     }
 
-    /**
-     * Calcula las dimensiones del mapa para ajustar la posición de las ciudades dentro del panel.
-     */
     private void calculateMapDimensions() {
         int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
@@ -55,21 +42,11 @@ public class GraphPanel extends JPanel {
         offsetY = (getHeight() - height) / 2;
     }
 
-    /**
-     * Establece un camino resaltado para ser dibujado en el grafo.
-     *
-     * @param path Lista de aristas que representan el camino a resaltar.
-     */
     public void setHighlightedPath(List<DefaultWeightedEdge> path) {
         this.highlightedPath = path;
         repaint();
     }
 
-    /**
-     * Método sobrescrito para pintar los elementos gráficos del panel.
-     *
-     * @param g Objeto Graphics utilizado para dibujar.
-     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -78,7 +55,6 @@ public class GraphPanel extends JPanel {
 
         calculateMapDimensions();
 
-        // Dibuja las aristas del grafo
         for (DefaultWeightedEdge edge : graph.edgeSet()) {
             City city1 = graph.getEdgeSource(edge);
             City city2 = graph.getEdgeTarget(edge);
@@ -96,7 +72,6 @@ public class GraphPanel extends JPanel {
 
             g2.draw(new Line2D.Double(p1, p2));
 
-            // Etiqueta de peso en la arista
             int weight = (int) graph.getEdgeWeight(edge);
             g2.setColor(Color.BLACK);
 
@@ -105,7 +80,6 @@ public class GraphPanel extends JPanel {
             g2.drawString(weight + " km", x, y);
         }
 
-        // Dibuja los vértices del grafo
         int cityRadius = 15;
         for (City city : graph.vertexSet()) {
             Point point = new Point(city.getX() + offsetX, city.getY() + offsetY);
@@ -113,7 +87,6 @@ public class GraphPanel extends JPanel {
             g2.setColor(Color.BLUE);
             g2.fillOval(point.x - cityRadius / 2, point.y - cityRadius / 2, cityRadius, cityRadius);
 
-            // Etiqueta del nombre de la ciudad
             g2.setColor(Color.BLACK);
             g2.drawString(city.getName(), point.x - cityRadius / 2, point.y - cityRadius / 2 - 5);
         }
