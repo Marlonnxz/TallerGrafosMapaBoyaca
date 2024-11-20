@@ -52,23 +52,24 @@ public class BoyacaGraph {
         setRoad("Tunja", "Samacá", 30);
         setRoad("Tunja", "Lago de Tota", 90);
         setRoad("Tunja", "Monguí", 90);
-
         setRoad("Tunja", "Cómbita", 15);
         setRoad("Cómbita", "Paipa", 15);
         setRoad("Paipa", "Duitama", 15);
         setRoad("Duitama", "Sogamoso", 25);
-
         setRoad("Villa de Leyva", "Sáchica", 10);
         setRoad("Sáchica", "Tunja", 28);
-
         setRoad("Chiquinquirá", "Saboyá", 10);
         setRoad("Saboyá", "Samacá", 20);
-
         setRoad("Sogamoso", "Aquitania", 40);
         setRoad("Aquitania", "Lago de Tota", 10);
-
         setRoad("Sogamoso", "Monguí", 15);
-
+        setRoad("Villa de Leyva", "Sáchica", 10);
+        setRoad("Sáchica", "Tunja", 28);
+        setRoad("Chiquinquirá", "Saboyá", 10);
+        setRoad("Saboyá", "Samacá", 20);
+        setRoad("Sogamoso", "Aquitania", 40);
+        setRoad("Aquitania", "Lago de Tota", 10);
+        setRoad("Sogamoso", "Monguí", 15);
         setRoad("Tunja", "Tibasosa", 58);
         setRoad("Tibasosa", "Duitama", 8);
         setRoad("Tibasosa", "Nobsa", 7);
