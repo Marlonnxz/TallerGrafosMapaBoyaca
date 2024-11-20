@@ -9,6 +9,11 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.List;
 
+/**
+ * Clase que representa el panel gráfico para visualizar el mapa de Boyacá.
+ * Dibuja las ciudades como vértices y las conexiones entre ellas como aristas,
+ * además de resaltar la ruta más corta cuando se selecciona.
+ */
 public class GraphPanel extends JPanel {
     private Graph<City, DefaultWeightedEdge> graph;
     private List<DefaultWeightedEdge> highlightedPath;
@@ -17,12 +22,20 @@ public class GraphPanel extends JPanel {
     private int width = 0;
     private int height = 0;
 
+    /**
+     * Constructor de la clase GraphPanel.
+     * @param graph Grafo que contiene las ciudades y sus conexiones.
+     */
     public GraphPanel(Graph<City, DefaultWeightedEdge> graph) {
         this.graph = graph;
         this.highlightedPath = null;
         calculateMapDimensions();
     }
 
+    /**
+     * Calcula las dimensiones del mapa basándose en las coordenadas de las ciudades.
+     * Esto permite centrar el grafo en el panel.
+     */
     private void calculateMapDimensions() {
         int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
@@ -42,11 +55,20 @@ public class GraphPanel extends JPanel {
         offsetY = (getHeight() - height) / 2;
     }
 
+    /**
+     * Establece la ruta destacada en el grafo y solicita que se repinte el panel.
+     * @param path Lista de aristas que forman la ruta más corta.
+     */
     public void setHighlightedPath(List<DefaultWeightedEdge> path) {
         this.highlightedPath = path;
         repaint();
     }
 
+    /**
+     * Sobrescribe el método paintComponent para dibujar el grafo, incluyendo las ciudades,
+     * las aristas y la ruta más corta si está definida.
+     * @param g Objeto Graphics utilizado para el dibujo.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

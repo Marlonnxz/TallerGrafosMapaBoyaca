@@ -4,15 +4,21 @@ import co.edu.uptc.Model.City;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
-
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Clase que representa un grafo de las ciudades de Boyacá, donde los vértices son las ciudades
+ * y las aristas representan las carreteras entre ellas con sus distancias asociadas.
+ */
 public class BoyacaGraph {
     private Graph<City, DefaultWeightedEdge> graph;
     private Map<String, City> cityMap;
 
+    /**
+     * Constructor de la clase BoyacaGraph.
+     * Inicializa el grafo, el mapa de ciudades y agrega las ciudades y las carreteras correspondientes.
+     */
     public BoyacaGraph() {
         graph = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
         cityMap = new HashMap<>();
@@ -20,6 +26,9 @@ public class BoyacaGraph {
         addRoads();
     }
 
+    /**
+     * Método que agrega las ciudades al grafo.
+     */
     private void addCities() {
         addCity(new City("Tunja", 400, 100));
         addCity(new City("Duitama", 700, 200));
@@ -38,11 +47,18 @@ public class BoyacaGraph {
         addCity(new City("Nobsa", 670, 300));
     }
 
+    /**
+     * Método que agrega una ciudad al grafo y la mapea por su nombre.
+     * @param city Objeto City que representa la ciudad a agregar.
+     */
     private void addCity(City city) {
         graph.addVertex(city);
         cityMap.put(city.getName(), city);
     }
 
+    /**
+     * Método que agrega las carreteras entre las ciudades del grafo con sus respectivas distancias.
+     */
     private void addRoads() {
         setRoad("Tunja", "Duitama", 50);
         setRoad("Tunja", "Sogamoso", 75);
@@ -77,6 +93,12 @@ public class BoyacaGraph {
         setRoad("Duitama", "Nobsa", 15);
     }
 
+    /**
+     * Método que crea una carretera entre dos ciudades con una distancia específica.
+     * @param cityName1 Nombre de la primera ciudad.
+     * @param cityName2 Nombre de la segunda ciudad.
+     * @param distanceKm Distancia en kilómetros entre las dos ciudades.
+     */
     private void setRoad(String cityName1, String cityName2, double distanceKm) {
         City city1 = cityMap.get(cityName1);
         City city2 = cityMap.get(cityName2);
@@ -89,6 +111,13 @@ public class BoyacaGraph {
         }
     }
 
+    /**
+     * Calcula el tiempo estimado de viaje entre dos puntos según el modo de transporte.
+     * @param transportMode Modo de transporte: "Bicicleta", "Automóvil", "Moto", "A Pie".
+     * @param distanceKm Distancia en kilómetros a recorrer.
+     * @return Tiempo estimado en minutos.
+     * @throws IllegalArgumentException Si el modo de transporte no es válido.
+     */
     public double getTime(String transportMode, double distanceKm) {
         double speedKmPerH;
         switch (transportMode) {
@@ -110,10 +139,18 @@ public class BoyacaGraph {
         return (distanceKm / speedKmPerH) * 60;
     }
 
+    /**
+     * Obtiene el grafo de ciudades.
+     * @return Grafo que representa las ciudades y sus carreteras.
+     */
     public Graph<City, DefaultWeightedEdge> getGraph() {
         return graph;
     }
 
+    /**
+     * Obtiene el mapa de ciudades.
+     * @return Mapa que relaciona el nombre de la ciudad con su objeto City correspondiente.
+     */
     public Map<String, City> getCityMap() {
         return cityMap;
     }

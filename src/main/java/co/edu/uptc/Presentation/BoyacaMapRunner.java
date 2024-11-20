@@ -1,21 +1,28 @@
 package co.edu.uptc.Presentation;
 
-
 import co.edu.uptc.Logic.BoyacaGraph;
 import co.edu.uptc.Model.City;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Clase principal para ejecutar la aplicación de mapa interactivo de Boyacá.
+ * Esta clase extiende JFrame y utiliza una combinación de componentes gráficos
+ * para permitir al usuario calcular la ruta más corta entre dos ciudades.
+ */
 public class BoyacaMapRunner extends JFrame {
     private BoyacaGraph boyacaGraph;
     private GraphPanel graphPanel;
     private JComboBox<String> startCityComboBox, endCityComboBox, transportComboBox;
 
+    /**
+     * Constructor de la clase BoyacaMapRunner.
+     * Configura la ventana principal, inicializa los componentes y agrega eventos.
+     */
     public BoyacaMapRunner() {
         boyacaGraph = new BoyacaGraph();
         setTitle("Mapa Interactivo - Boyacá");
@@ -62,6 +69,9 @@ public class BoyacaMapRunner extends JFrame {
         add(controlPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Calcula la ruta más corta entre dos ciudades seleccionadas y muestra la información al usuario.
+     */
     private void calculateShortestPath() {
         String startCityName = (String) startCityComboBox.getSelectedItem();
         String endCityName = (String) endCityComboBox.getSelectedItem();
@@ -106,6 +116,11 @@ public class BoyacaMapRunner extends JFrame {
         }
     }
 
+    /**
+     * Obtiene la velocidad media para un modo de transporte específico.
+     * @param transportMode Modo de transporte seleccionado.
+     * @return Velocidad media en kilómetros por hora.
+     */
     private double getSpeed(String transportMode) {
         switch (transportMode) {
             case "Bicicleta":
@@ -121,6 +136,9 @@ public class BoyacaMapRunner extends JFrame {
         }
     }
 
+    /**
+     * Configura el estilo visual de la interfaz utilizando el tema Nimbus.
+     */
     private void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -128,6 +146,10 @@ public class BoyacaMapRunner extends JFrame {
         }
     }
 
+    /**
+     * Método principal para ejecutar la aplicación.
+     * @param args Argumentos de línea de comandos.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             BoyacaMapRunner app = new BoyacaMapRunner();
